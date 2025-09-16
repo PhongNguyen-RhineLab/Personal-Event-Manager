@@ -1,93 +1,114 @@
 const express = require('express');
-const mysql = require('mysql2');
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express();
-const port = 3000;
+const PORT = 3000;
 
+// Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('.'));
 
-// MySQL connection
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'Phong2003!',
-  database: 'fullcalendar',
-});
-
-db.connect((err) => {
-  if (err) {
-    console.error('Unable to connect to database:', err);
-    process.exit(1);
+// In-memory storage for events (in production, you'd use a database)
+let events = [
+  {
+    id: 1,
+    title: 'Sample Event',
+    start: '2025-09-17T10:00:00',
+    end: '2025-09-17T12:00:00',
+    allDay: false
   }
-  console.log('Connected to MySQL database.');
-});
+];
 
-// Serve static files (index.html, lib, etc.) from the project directory
-app.use(express.static(path.join(__dirname)));
+let nextId = 2;
 
-// Update event endpoint
-app.post('/api/update-event', (req, res) => {
-  const { id, title, start, end } = req.body;
-  if (!id || !title || !start || !end) {
-    return res.status(400).json({ error: 'Missing required fields.' });
-  }
-  const sql = 'UPDATE events SET title=?, start=?, end=? WHERE id=?';
-  db.query(sql, [title, start, end, id], (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Database error.' });
-    }
-    res.json({ success: true });
-  });
-});
+// API Routes
 
 // Get all events
 app.get('/api/events', (req, res) => {
-  db.query('SELECT * FROM events', (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Database error.' });
-    }
-    res.json(results);
-  });
+  console.log('GET /api/events - Fetching all events');
+  res.json(events);
 });
 
 // Add new event
 app.post('/api/add-event', (req, res) => {
-  const { title, start, end } = req.body;
-  if (!title || !start || !end) {
-    return res.status(400).json({ error: 'Missing required fields.' });
+  console.log('POST /api/add-event - Adding new event:', req.body);
+
+  const { title, start, end, allDay } = req.body;
+
+  if (!title || !start) {
+    return res.status(400).json({ error: 'Title and start date are required' });
   }
-  const sql = 'INSERT INTO events (title, start, end) VALUES (?, ?, ?)';
-  db.query(sql, [title, start, end], (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Database error.' });
-    }
-    res.json({ success: true, id: result.insertId });
-  });
+
+  const newEvent = {
+    id: nextId++,
+    title: title,
+    start: start,
+    end: end || start,
+    allDay: allDay || false
+  };
+
+  events.push(newEvent);
+  console.log('Event added successfully:', newEvent);
+  res.json({ success: true, event: newEvent });
+});
+
+// Update event (for drag/drop and resize)
+app.post('/api/update-event', (req, res) => {
+  console.log('POST /api/update-event - Updating event:', req.body);
+
+  const { id, title, start, end } = req.body;
+
+  const eventIndex = events.findIndex(event => event.id == id);
+
+  if (eventIndex === -1) {
+    return res.status(404).json({ error: 'Event not found' });
+  }
+
+  // Update the event
+  events[eventIndex] = {
+    ...events[eventIndex],
+    title: title || events[eventIndex].title,
+    start: start || events[eventIndex].start,
+    end: end || events[eventIndex].end
+  };
+
+  console.log('Event updated successfully:', events[eventIndex]);
+  res.json({ success: true, event: events[eventIndex] });
 });
 
 // Delete event
 app.delete('/api/delete-event', (req, res) => {
+  console.log('DELETE /api/delete-event - Deleting event with ID:', req.body.id);
+
   const { id } = req.body;
-  if (!id) {
-    return res.status(400).json({ error: 'Missing event id.' });
+
+  const eventIndex = events.findIndex(event => event.id == id);
+
+  if (eventIndex === -1) {
+    return res.status(404).json({ error: 'Event not found' });
   }
-  db.query('DELETE FROM events WHERE id = ?', [id], (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Database error.' });
-    }
-    res.json({ success: true });
-  });
+
+  const deletedEvent = events.splice(eventIndex, 1)[0];
+  console.log('Event deleted successfully:', deletedEvent);
+  res.json({ success: true, deletedEvent });
 });
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+// Serve the main HTML file
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log('Available API endpoints:');
+  console.log('- GET /api/events');
+  console.log('- POST /api/add-event');
+  console.log('- POST /api/update-event');
+  console.log('- DELETE /api/delete-event');
+});
+
+module.exports = app;
