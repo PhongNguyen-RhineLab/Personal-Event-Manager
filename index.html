@@ -47,7 +47,7 @@
           // Create a modal dialog for event creation with enhanced styling
           var dialogHtml = `
             <div id="eventDialog" style="
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
               border: none;
               border-radius: 15px;
               padding: 0;
@@ -71,19 +71,19 @@
               ">
                 <h3 style="
                   margin: 0 0 25px 0;
-                  color: #2c3e50;
+                  color: #374151;
                   font-size: 24px;
                   font-weight: 600;
                   text-align: center;
                   letter-spacing: -0.5px;
-                ">Create New Event</h3>
+                ">✨ Create New Event</h3>
 
                 <div style="margin-bottom: 20px;">
                   <label style="
                     display: block;
                     margin-bottom: 8px;
                     font-weight: 600;
-                    color: #34495e;
+                    color: #6B7280;
                     font-size: 14px;
                     text-transform: uppercase;
                     letter-spacing: 0.5px;
@@ -91,12 +91,12 @@
                   <input type="text" id="eventTitle" style="
                     width: 100%;
                     padding: 12px 16px;
-                    border: 2px solid #e9ecef;
+                    border: 2px solid #E5E7EB;
                     border-radius: 8px;
                     box-sizing: border-box;
                     font-size: 16px;
                     transition: all 0.3s ease;
-                    background: #f8f9fa;
+                    background: #F9FAFB;
                   " placeholder="Enter event title">
                 </div>
 
@@ -106,7 +106,7 @@
                     align-items: center;
                     cursor: pointer;
                     padding: 12px 16px;
-                    background: linear-gradient(135deg, #74b9ff, #0984e3);
+                    background: linear-gradient(135deg, #4A90E2, #357ABD);
                     color: white;
                     border-radius: 8px;
                     font-weight: 500;
@@ -121,16 +121,17 @@
 
                 <div id="timeFields" style="margin-bottom: 20px; ${allDay ? 'display: none;' : ''}">
                   <div style="
-                    background: linear-gradient(135deg, #a8e6cf, #88d8a3);
+                    background: linear-gradient(135deg, #EBF4FF, #DBEAFE);
                     padding: 20px;
                     border-radius: 10px;
                     margin-bottom: 20px;
+                    border: 1px solid rgba(74, 144, 226, 0.2);
                   ">
                     <label style="
                       display: block;
                       margin-bottom: 12px;
                       font-weight: 600;
-                      color: #27ae60;
+                      color: #4A90E2;
                       font-size: 14px;
                       text-transform: uppercase;
                       letter-spacing: 0.5px;
@@ -165,7 +166,7 @@
                       <span style="
                         font-size: 18px;
                         font-weight: bold;
-                        color: #27ae60;
+                        color: #4A90E2;
                       ">:</span>
                       <select id="startMinute" style="
                         flex: 1;
@@ -186,15 +187,16 @@
                   </div>
 
                   <div style="
-                    background: linear-gradient(135deg, #ffb3ba, #ff9aa2);
+                    background: linear-gradient(135deg, #F3F4F6, #E5E7EB);
                     padding: 20px;
                     border-radius: 10px;
+                    border: 1px solid rgba(107, 114, 128, 0.2);
                   ">
                     <label style="
                       display: block;
                       margin-bottom: 12px;
                       font-weight: 600;
-                      color: #e74c3c;
+                      color: #6B7280;
                       font-size: 14px;
                       text-transform: uppercase;
                       letter-spacing: 0.5px;
@@ -229,7 +231,7 @@
                       <span style="
                         font-size: 18px;
                         font-weight: bold;
-                        color: #e74c3c;
+                        color: #6B7280;
                       ">:</span>
                       <select id="endMinute" style="
                         flex: 1;
@@ -252,16 +254,17 @@
 
                 <div id="allDayFields" style="margin-bottom: 20px; ${!allDay ? 'display: none;' : ''}">
                   <div style="
-                    background: #93c9e7;
+                    background: linear-gradient(135deg, #EBF4FF, #DBEAFE);
                     padding: 20px;
                     border-radius: 10px;
+                    border: 1px solid rgba(74, 144, 226, 0.2);
                   ">
                     <div style="margin-bottom: 15px;">
                       <label style="
                         display: block;
                         margin-bottom: 8px;
                         font-weight: 600;
-                        color: #d35400;
+                        color: #4A90E2;
                         font-size: 14px;
                         text-transform: uppercase;
                         letter-spacing: 0.5px;
@@ -281,7 +284,7 @@
                         display: block;
                         margin-bottom: 8px;
                         font-weight: 600;
-                        color: #d35400;
+                        color: #4A90E2;
                         font-size: 14px;
                         text-transform: uppercase;
                         letter-spacing: 0.5px;
@@ -303,8 +306,8 @@
                   <button id="cancelBtn" style="
                     margin-right: 15px;
                     padding: 12px 24px;
-                    border: 2px solid #95a5a6;
-                    background: linear-gradient(135deg, #e18664, #e51e1e);
+                    border: 2px solid #6B7280;
+                    background: linear-gradient(135deg, #ff7865, #ff1616);
                     color: white;
                     border-radius: 25px;
                     cursor: pointer;
@@ -313,12 +316,12 @@
                     text-transform: uppercase;
                     letter-spacing: 0.5px;
                     transition: all 0.3s ease;
-                    box-shadow: 0 4px 15px rgba(149, 165, 166, 0.3);
+                    box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
                   ">✖️ Cancel</button>
                   <button id="saveBtn" style="
                     padding: 12px 24px;
                     border: none;
-                    background: linear-gradient(135deg, #00b894, #00cec9);
+                    background: linear-gradient(135deg, #4A90E2, #357ABD);
                     color: white;
                     border-radius: 25px;
                     cursor: pointer;
@@ -327,7 +330,7 @@
                     text-transform: uppercase;
                     letter-spacing: 0.5px;
                     transition: all 0.3s ease;
-                    box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
+                    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
                   ">💾 Save Event</button>
                 </div>
               </div>
@@ -535,20 +538,265 @@
 
   </script>
   <style>
-
     body {
-      margin-top: 40px;
-      text-align: center;
-      font-size: 14px;
-      font-family: "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
-
+      margin: 0;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     #calendar {
-      width: 900px;
+      width: 95%;
+      max-width: 1200px;
       margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.1);
+      padding: 30px;
+      box-sizing: border-box;
     }
 
+    /* Calendar Header Styling */
+    .fc-toolbar {
+      background: linear-gradient(135deg, #4A90E2, #357ABD) !important;
+      padding: 20px 25px !important;
+      border-radius: 15px !important;
+      margin-bottom: 25px !important;
+      box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3) !important;
+    }
+
+    .fc-toolbar h2 {
+      color: white !important;
+      font-size: 28px !important;
+      font-weight: 600 !important;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+      margin: 0 !important;
+      letter-spacing: -0.5px !important;
+    }
+
+    .fc-button {
+      background: linear-gradient(135deg, #4A90E2, #357ABD) !important;
+      border: none !important;
+      color: white !important;
+      padding: 10px 18px !important;
+      border-radius: 25px !important;
+      font-weight: 600 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+      box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3) !important;
+      transition: all 0.3s ease !important;
+      margin: 0 5px !important;
+    }
+
+    .fc-button:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4) !important;
+      background: linear-gradient(135deg, #357ABD, #2E6BA8) !important;
+    }
+
+    .fc-button:active,
+    .fc-button:focus {
+      box-shadow: 0 2px 10px rgba(74, 144, 226, 0.3) !important;
+      transform: translateY(0) !important;
+    }
+
+    .fc-state-active {
+      background: linear-gradient(135deg, #2E6BA8, #1E4A73) !important;
+      box-shadow: 0 4px 15px rgba(46, 107, 168, 0.3) !important;
+    }
+
+    /* Calendar Grid Styling */
+    .fc-view-container {
+      border-radius: 15px !important;
+      overflow: hidden !important;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08) !important;
+    }
+
+    .fc-widget-header {
+      background: linear-gradient(135deg, #6B7280, #4B5563) !important;
+      color: white !important;
+      font-weight: 600 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+      padding: 15px 8px !important;
+      border: none !important;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+    }
+
+    .fc-day-header {
+      background: linear-gradient(135deg, #6B7280, #4B5563) !important;
+      color: white !important;
+      font-weight: 600 !important;
+      padding: 12px !important;
+      border: none !important;
+    }
+
+    .fc-widget-content {
+      border: 1px solid #E5E7EB !important;
+      background: #FEFEFE !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .fc-day:hover {
+      background: linear-gradient(135deg, #EBF4FF, #DBEAFE) !important;
+    }
+
+    .fc-today {
+      background: linear-gradient(135deg, #EBF4FF, #DBEAFE) !important;
+      border: 2px solid #4A90E2 !important;
+      font-weight: bold !important;
+    }
+
+    .fc-other-month {
+      background: #F9FAFB !important;
+      color: #9CA3AF !important;
+    }
+
+    /* Event Styling */
+    .fc-event {
+      background: linear-gradient(135deg, #4A90E2, #357ABD) !important;
+      border: none !important;
+      border-radius: 8px !important;
+      padding: 4px 8px !important;
+      box-shadow: 0 3px 10px rgba(74, 144, 226, 0.3) !important;
+      transition: all 0.3s ease !important;
+      font-weight: 500 !important;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+    }
+
+    .fc-event:hover {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4) !important;
+      background: linear-gradient(135deg, #357ABD, #2E6BA8) !important;
+    }
+
+    .fc-event-title {
+      font-weight: 600 !important;
+      color: white !important;
+    }
+
+    /* Time Grid Styling */
+    .fc-time-grid .fc-slats td {
+      border-top: 1px solid #E5E7EB !important;
+      height: 2em !important;
+    }
+
+    .fc-axis {
+      background: #F9FAFB !important;
+      color: #6B7280 !important;
+      font-weight: 500 !important;
+      border: 1px solid #E5E7EB !important;
+    }
+
+    .fc-time-grid .fc-bg .fc-day {
+      background: linear-gradient(to bottom, #FFFFFF, #F9FAFB) !important;
+    }
+
+    /* Selection Styling */
+    .fc-highlight {
+      background: linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(53, 122, 189, 0.2)) !important;
+      border: 2px dashed #4A90E2 !important;
+    }
+
+    /* Week/Day View Styling */
+    .fc-agenda-view .fc-day-grid {
+      background: linear-gradient(135deg, #EBF4FF, #DBEAFE) !important;
+    }
+
+    .fc-agenda-view .fc-day-grid .fc-day {
+      background: rgba(255,255,255,0.8) !important;
+      border: 1px solid rgba(255,255,255,0.3) !important;
+    }
+
+    /* Month View Number Styling */
+    .fc-day-number {
+      color: #374151 !important;
+      font-weight: 600 !important;
+      font-size: 14px !important;
+      padding: 8px !important;
+    }
+
+    .fc-today .fc-day-number {
+      background: linear-gradient(135deg, #4A90E2, #357ABD) !important;
+      color: white !important;
+      border-radius: 50% !important;
+      width: 30px !important;
+      height: 30px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin: 4px !important;
+      box-shadow: 0 3px 10px rgba(74, 144, 226, 0.3) !important;
+    }
+
+    /* More Events Link */
+    .fc-more {
+      background: linear-gradient(135deg, #6B7280, #4B5563) !important;
+      color: white !important;
+      border-radius: 12px !important;
+      padding: 2px 8px !important;
+      font-weight: 600 !important;
+      box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3) !important;
+      border: none !important;
+      text-transform: uppercase !important;
+      font-size: 10px !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    /* Loading and Empty States */
+    .fc-loading {
+      background: linear-gradient(135deg, #EBF4FF, #DBEAFE) !important;
+      border-radius: 10px !important;
+      padding: 20px !important;
+      text-align: center !important;
+      color: #4A90E2 !important;
+      font-weight: 600 !important;
+    }
+
+    /* Custom scrollbar for time views */
+    .fc-scroller::-webkit-scrollbar {
+      width: 8px !important;
+    }
+
+    .fc-scroller::-webkit-scrollbar-track {
+      background: #F3F4F6 !important;
+      border-radius: 4px !important;
+    }
+
+    .fc-scroller::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #4A90E2, #357ABD) !important;
+      border-radius: 4px !important;
+    }
+
+    .fc-scroller::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, #357ABD, #2E6BA8) !important;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      #calendar {
+        width: 98% !important;
+        padding: 15px !important;
+        margin: 10px auto !important;
+      }
+
+      .fc-toolbar {
+        padding: 15px !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+      }
+
+      .fc-toolbar h2 {
+        font-size: 20px !important;
+        margin-bottom: 10px !important;
+      }
+
+      .fc-button {
+        padding: 8px 12px !important;
+        font-size: 12px !important;
+      }
+    }
   </style>
 </head>
 <body>
