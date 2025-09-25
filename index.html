@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>Lịch Sự Kiện - Calendar Events</title>
 
   <link href='./lib/fullcalendar.min.css' rel='stylesheet'/>
   <link href='./lib/fullcalendar.print.css' rel='stylesheet' media='print'/>
@@ -29,6 +30,19 @@
           left: 'prev,next today',
           center: 'title',
           right: 'month,agendaWeek,agendaDay'
+        },
+        // Add Vietnamese month and day names
+        monthNames: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
+                     'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+        monthNamesShort: ['Th1', 'Th2', 'Th3', 'Th4', 'Th5', 'Th6',
+                         'Th7', 'Th8', 'Th9', 'Th10', 'Th11', 'Th12'],
+        dayNames: ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'],
+        dayNamesShort: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+        buttonText: {
+          today: 'Hôm nay',
+          month: 'Tháng',
+          week: 'Tuần',
+          day: 'Ngày'
         },
 
         events: "http://localhost:3000/api/events",
@@ -76,7 +90,7 @@
                   font-weight: 600;
                   text-align: center;
                   letter-spacing: -0.5px;
-                ">✨ Create New Event</h3>
+                ">✨ Tạo sự kiện mới</h3>
 
                 <div style="margin-bottom: 20px;">
                   <label style="
@@ -87,7 +101,7 @@
                     font-size: 14px;
                     text-transform: uppercase;
                     letter-spacing: 0.5px;
-                  ">Event Title</label>
+                  ">Tiêu đề sự kiện</label>
                   <input type="text" id="eventTitle" style="
                     width: 100%;
                     padding: 12px 16px;
@@ -97,7 +111,7 @@
                     font-size: 16px;
                     transition: all 0.3s ease;
                     background: #F9FAFB;
-                  " placeholder="Enter event title">
+                  " placeholder="Nhập tiêu đề sự kiện">
                 </div>
 
                 <div style="margin-bottom: 25px;">
@@ -115,7 +129,7 @@
                     <input type="checkbox" id="allDayCheck" ${allDay ? 'checked' : ''} style="
                       margin-right: 10px;
                       transform: scale(1.2);
-                    "> 📅 All Day Event
+                    "> 📅 Sự kiện cả ngày
                   </label>
                 </div>
 
@@ -135,7 +149,7 @@
                       font-size: 14px;
                       text-transform: uppercase;
                       letter-spacing: 0.5px;
-                    ">🕐 Start Date & Time</label>
+                    ">🕐 Ngày & giờ bắt đầu</label>
                     <div style="margin-bottom: 12px;">
                       <input type="date" id="startDate" style="
                         width: 100%;
@@ -200,7 +214,7 @@
                       font-size: 14px;
                       text-transform: uppercase;
                       letter-spacing: 0.5px;
-                    ">🕕 End Date & Time</label>
+                    ">🕕 Ngày & giờ kết thúc</label>
                     <div style="margin-bottom: 12px;">
                       <input type="date" id="endDate" style="
                         width: 100%;
@@ -268,7 +282,7 @@
                         font-size: 14px;
                         text-transform: uppercase;
                         letter-spacing: 0.5px;
-                      ">📅 Start Date</label>
+                      ">📅 Ngày bắt đầu</label>
                       <input type="date" id="allDayStartDate" style="
                         width: 100%;
                         padding: 10px 14px;
@@ -288,7 +302,7 @@
                         font-size: 14px;
                         text-transform: uppercase;
                         letter-spacing: 0.5px;
-                      ">📅 End Date</label>
+                      ">📅 Ngày kết thúc</label>
                       <input type="date" id="allDayEndDate" style="
                         width: 100%;
                         padding: 10px 14px;
@@ -317,7 +331,7 @@
                     letter-spacing: 0.5px;
                     transition: all 0.3s ease;
                     box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
-                  ">✖️ Cancel</button>
+                  ">✖️ Hủy bỏ</button>
                   <button id="saveBtn" style="
                     padding: 12px 24px;
                     border: none;
@@ -331,7 +345,7 @@
                     letter-spacing: 0.5px;
                     transition: all 0.3s ease;
                     box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
-                  ">💾 Save Event</button>
+                  ">💾 Lưu sự kiện</button>
                 </div>
               </div>
             </div>
@@ -417,7 +431,7 @@
           $('#saveBtn').click(function() {
             var title = $('#eventTitle').val().trim();
             if (!title) {
-              alert('Please enter an event title');
+              alert('Vui lòng nhập tiêu đề sự kiện');
               return;
             }
 
@@ -464,7 +478,7 @@
               error: function(xhr, status, error) {
                 console.error('Error adding event:', error);
                 console.error('Response:', xhr.responseText);
-                alert('Error adding event. Please try again.');
+                alert('Lỗi khi thêm sự kiện. Vui lòng thử lại.');
               }
             });
           });
@@ -487,7 +501,7 @@
             },
             error: function(xhr, status, error) {
               console.error('Error updating event:', error);
-              alert('Error updating event. Please try again.');
+              alert('Lỗi khi cập nhật sự kiện. Vui lòng thử lại.');
               // Revert the event to its original position
               $('#calendar').fullCalendar('refetchEvents');
             }
@@ -530,7 +544,7 @@
                   font-weight: 600;
                   text-align: center;
                   letter-spacing: -0.5px;
-                ">✏️ Edit Event</h3>
+                ">✏️ Chỉnh sửa sự kiện</h3>
 
                 <div style="margin-bottom: 20px;">
                   <label style="
@@ -541,7 +555,7 @@
                     font-size: 14px;
                     text-transform: uppercase;
                     letter-spacing: 0.5px;
-                  ">Event Title</label>
+                  ">Tiêu đề sự kiện</label>
                   <input type="text" id="editEventTitle" style="
                     width: 100%;
                     padding: 12px 16px;
@@ -551,7 +565,7 @@
                     font-size: 16px;
                     transition: all 0.3s ease;
                     background: #F9FAFB;
-                  " placeholder="Enter event title" value="${event.title.replace(/"/g, '&quot;')}">
+                  " placeholder="Nhập tiêu đề sự kiện" value="${event.title.replace(/"/g, '&quot;')}">
                 </div>
 
                 <div style="margin-bottom: 25px;">
@@ -569,7 +583,7 @@
                     <input type="checkbox" id="editAllDayCheck" ${isAllDay ? 'checked' : ''} style="
                       margin-right: 10px;
                       transform: scale(1.2);
-                    "> 📅 All Day Event
+                    "> 📅 Sự kiện cả ngày
                   </label>
                 </div>
 
@@ -589,7 +603,7 @@
                       font-size: 14px;
                       text-transform: uppercase;
                       letter-spacing: 0.5px;
-                    ">🕐 Start Date & Time</label>
+                    ">🕐 Ngày & giờ bắt đầu</label>
                     <div style="margin-bottom: 12px;">
                       <input type="date" id="editStartDate" style="
                         width: 100%;
@@ -654,7 +668,7 @@
                       font-size: 14px;
                       text-transform: uppercase;
                       letter-spacing: 0.5px;
-                    ">🕕 End Date & Time</label>
+                    ">🕕 Ngày & giờ kết thúc</label>
                     <div style="margin-bottom: 12px;">
                       <input type="date" id="editEndDate" style="
                         width: 100%;
@@ -722,7 +736,7 @@
                         font-size: 14px;
                         text-transform: uppercase;
                         letter-spacing: 0.5px;
-                      ">📅 Start Date</label>
+                      ">📅 Ngày bắt đầu</label>
                       <input type="date" id="editAllDayStartDate" style="
                         width: 100%;
                         padding: 10px 14px;
@@ -742,7 +756,7 @@
                         font-size: 14px;
                         text-transform: uppercase;
                         letter-spacing: 0.5px;
-                      ">📅 End Date</label>
+                      ">📅 Ngày kết thúc</label>
                       <input type="date" id="editAllDayEndDate" style="
                         width: 100%;
                         padding: 10px 14px;
@@ -771,7 +785,7 @@
                     letter-spacing: 0.5px;
                     transition: all 0.3s ease;
                     box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
-                  ">✖️ Cancel</button>
+                  ">✖️ Hủy bỏ</button>
                   <button id="deleteBtn" style="
                     margin-right: 10px;
                     padding: 12px 20px;
@@ -786,7 +800,7 @@
                     letter-spacing: 0.5px;
                     transition: all 0.3s ease;
                     box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
-                  ">🗑️ Delete</button>
+                  ">🗑️ Xóa</button>
                   <button id="updateBtn" style="
                     padding: 12px 20px;
                     border: none;
@@ -800,7 +814,7 @@
                     letter-spacing: 0.5px;
                     transition: all 0.3s ease;
                     box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
-                  ">💾 Update Event</button>
+                  ">💾 Cập nhật sự kiện</button>
                 </div>
               </div>
             </div>
@@ -898,7 +912,7 @@
 
           // Handle delete button
           $('#deleteBtn').click(function() {
-            if (confirm("Are you sure you want to delete this event?")) {
+            if (confirm("Bạn có chắc chắn muốn xóa sự kiện này?")) {
               $.ajax({
                 type: "DELETE",
                 url: "http://localhost:3000/api/delete-event",
@@ -911,7 +925,7 @@
                 },
                 error: function(xhr, status, error) {
                   console.error('Error deleting event:', error);
-                  alert('Error deleting event. Please try again.');
+                  alert('Lỗi khi xóa sự kiện. Vui lòng thử lại.');
                 }
               });
             }
@@ -921,7 +935,7 @@
           $('#updateBtn').click(function() {
             var title = $('#editEventTitle').val().trim();
             if (!title) {
-              alert('Please enter an event title');
+              alert('Vui lòng nhập tiêu đề sự kiện');
               return;
             }
 
@@ -969,7 +983,7 @@
               error: function(xhr, status, error) {
                 console.error('Error updating event:', error);
                 console.error('Response:', xhr.responseText);
-                alert('Error updating event. Please try again.');
+                alert('Lỗi khi cập nhật sự kiện. Vui lòng thử lại.');
               }
             });
           });
