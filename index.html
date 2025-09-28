@@ -49,10 +49,12 @@
 
         // Convert the allDay from string to boolean
         eventRender: function (event, element, view) {
-          if (event.allDay === 'true') {
-            event.allDay = true;
-          } else {
-            event.allDay = false;
+          // Ensure allDay is boolean
+          event.allDay = Boolean(event.allDay);
+
+          // Add error handling for malformed events
+          if (!event.title) {
+            event.title = 'Untitled Event';
           }
         },
         selectable: true,

@@ -66,46 +66,43 @@ app.post('/api/add-event', async (req, res) => {
 });
 
 // Update event (for drag/drop and resize)
+// Improved update-event endpoint
 app.post('/api/update-event', async (req, res) => {
-  console.log('POST /api/update-event - Updating event:', req.body);
-
-  const { id, title, start, end } = req.body;
+  const { id, title, start, end, allDay } = req.body;
 
   if (!id) {
     return res.status(400).json({ error: 'Event ID is required' });
   }
 
   try {
-    // First, get the current event
     const [currentEvent] = await pool.execute('SELECT * FROM events WHERE id = ?', [id]);
 
     if (currentEvent.length === 0) {
       return res.status(404).json({ error: 'Event not found' });
     }
 
-    // Update the event with provided values or keep existing ones
-    const updatedTitle = title || currentEvent[0].title;
-    const updatedStart = start || currentEvent[0].start;
-    const updatedEnd = end || currentEvent[0].end;
+    const current = currentEvent[0];
+    const isAllDay = allDay !== undefined ? allDay : current.allDay;
 
-    await pool.execute(
-      'UPDATE events SET title = ?, start = ?, end = ? WHERE id = ?',
-      [updatedTitle, updatedStart, updatedEnd, id]
-    );
-
-    const updatedEvent = {
-      id: parseInt(id),
-      title: updatedTitle,
-      start: updatedStart,
-      end: updatedEnd,
-      allDay: currentEvent[0].allDay
+    const updatedData = {
+      title: title || current.title,
+      start: start ? formatDateForMySQL(start, isAllDay) : current.start,
+      end: end ? formatDateForMySQL(end, isAllDay) : current.end,
+      allDay: isAllDay
     };
 
-    console.log('Event updated successfully:', updatedEvent);
-    res.json({ success: true, event: updatedEvent });
+    await pool.execute(
+        'UPDATE events SET title = ?, start = ?, end = ?, allDay = ? WHERE id = ?',
+        [updatedData.title, updatedData.start, updatedData.end, updatedData.allDay, id]
+    );
+
+    res.json({ success: true, event: { id: parseInt(id), ...updatedData } });
   } catch (error) {
     console.error('Error updating event:', error);
-    res.status(500).json({ error: 'Failed to update event' });
+    res.status(500).json({
+      error: 'Failed to update event',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 });
 
@@ -148,4 +145,23 @@ app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
 
+// Add to server.js
+function formatDateForMySQL(dateStr, isAllDay = false) {
+  if (!dateStr) return null;
+
+  // Handle different input formats
+  if (isAllDay) {
+    // Ensure YYYY-MM-DD format for all-day events
+    return dateStr.includes('T') ? dateStr.split('T')[0] : dateStr;
+  } else {
+    // Ensure YYYY-MM-DD HH:mm:ss format for timed events
+    if (!dateStr.includes(':')) {
+      return dateStr + ' 00:00:00';
+    }
+    if (!dateStr.includes(' ')) {
+      return dateStr + ':00';
+    }
+    return dateStr.length === 16 ? dateStr + ':00' : dateStr;
+  }
+}
 module.exports = app;
