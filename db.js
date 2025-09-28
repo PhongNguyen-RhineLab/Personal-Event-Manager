@@ -1,11 +1,14 @@
+// Load environment variables at the top
+require('dotenv').config();
 const mysql = require('mysql2/promise');
 
-// Database configuration
+// Database configuration using environment variables
 const dbConfig = {
-  host: 'localhost',
-  user: 'root',
-  password: 'Phong2003!',
-  database: 'fullcalendar',
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME || 'fullcalendar',
+  port: process.env.DB_PORT || 3306,
   charset: 'utf8mb4'
 };
 
@@ -24,7 +27,8 @@ async function initializeDatabase() {
     const connection = await mysql.createConnection({
       host: dbConfig.host,
       user: dbConfig.user,
-      password: dbConfig.password
+      password: dbConfig.password,
+      port: dbConfig.port
     });
 
     // Create database if it doesn't exist
@@ -58,6 +62,7 @@ async function initializeDatabase() {
 
     await dbConnection.end();
     console.log('Database initialized successfully');
+    console.log(`Connected to database: ${dbConfig.database} on ${dbConfig.host}`);
   } catch (error) {
     console.error('Database initialization error:', error);
     throw error;

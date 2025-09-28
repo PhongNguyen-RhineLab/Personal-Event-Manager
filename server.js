@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 const { pool, initializeDatabase } = require('./db');
+require('dotenv').config();
 
 const app = express();
 const PORT = 3000;

@@ -8,3 +8,4 @@ build
 .directory
 .idea
 .DS_Store
+.env
