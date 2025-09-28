@@ -11,473 +11,12 @@
   <script src='./lib/moment.min.js'></script>
   <script src='./lib/jquery-ui.custom.min.js'></script>
   <script src='./lib/fullcalendar.min.js'></script>
-
-  <style>
-    body {
-      margin: 0;
-      padding: 40px 20px;
-      background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
-      min-height: 100vh;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    #calendar {
-      width: 95%;
-      max-width: 1200px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 25px 80px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.1);
-      padding: 30px;
-      box-sizing: border-box;
-    }
-
-    /* Toast Notification System */
-    .toast-container {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 10000;
-      max-width: 400px;
-    }
-
-    .toast {
-      background: white;
-      border-radius: 12px;
-      padding: 16px 20px;
-      margin-bottom: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.1);
-      border-left: 4px solid;
-      display: flex;
-      align-items: center;
-      transform: translateX(420px);
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      opacity: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      font-size: 14px;
-      line-height: 1.4;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .toast.show {
-      transform: translateX(0);
-      opacity: 1;
-    }
-
-    .toast.hide {
-      transform: translateX(420px);
-      opacity: 0;
-    }
-
-    /* Toast Types */
-    .toast.error {
-      border-left-color: #E74C3C;
-      background: linear-gradient(135deg, #FDF2F2, #FFEAEA);
-    }
-
-    .toast.success {
-      border-left-color: #27AE60;
-      background: linear-gradient(135deg, #F0FDF4, #ECFDF5);
-    }
-
-    .toast.warning {
-      border-left-color: #F39C12;
-      background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
-    }
-
-    .toast.info {
-      border-left-color: #3498DB;
-      background: linear-gradient(135deg, #EBF8FF, #DBEAFE);
-    }
-
-    /* Toast Icons */
-    .toast-icon {
-      margin-right: 12px;
-      font-size: 20px;
-      flex-shrink: 0;
-    }
-
-    .toast.error .toast-icon {
-      color: #E74C3C;
-    }
-
-    .toast.success .toast-icon {
-      color: #27AE60;
-    }
-
-    .toast.warning .toast-icon {
-      color: #F39C12;
-    }
-
-    .toast.info .toast-icon {
-      color: #3498DB;
-    }
-
-    /* Toast Content */
-    .toast-content {
-      flex: 1;
-    }
-
-    .toast-title {
-      font-weight: 600;
-      margin-bottom: 4px;
-      color: #2D3748;
-    }
-
-    .toast-message {
-      color: #4A5568;
-    }
-
-    /* Close Button */
-    .toast-close {
-      margin-left: 12px;
-      background: none;
-      border: none;
-      font-size: 18px;
-      color: #9CA3AF;
-      cursor: pointer;
-      padding: 4px;
-      border-radius: 4px;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    .toast-close:hover {
-      background: rgba(0,0,0,0.1);
-      color: #6B7280;
-    }
-
-    /* Progress Bar */
-    .toast-progress {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 3px;
-      background: rgba(0,0,0,0.2);
-      transition: width linear;
-      border-radius: 0 0 12px 12px;
-    }
-
-    .toast.error .toast-progress {
-      background: #E74C3C;
-    }
-
-    .toast.success .toast-progress {
-      background: #27AE60;
-    }
-
-    .toast.warning .toast-progress {
-      background: #F39C12;
-    }
-
-    .toast.info .toast-progress {
-      background: #3498DB;
-    }
-
-    /* Calendar Header Styling */
-    .fc-toolbar {
-      background: linear-gradient(135deg, #4A90E2, #357ABD) !important;
-      padding: 20px 25px !important;
-      border-radius: 15px !important;
-      margin-bottom: 25px !important;
-      box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3) !important;
-    }
-
-    .fc-toolbar h2 {
-      color: white !important;
-      font-size: 28px !important;
-      font-weight: 600 !important;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-      margin: 0 !important;
-      letter-spacing: -0.5px !important;
-    }
-
-    .fc-button {
-      background: linear-gradient(135deg, #4A90E2, #357ABD) !important;
-      border: none !important;
-      color: white !important;
-      padding: 10px 18px !important;
-      border-radius: 25px !important;
-      font-weight: 600 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.5px !important;
-      box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3) !important;
-      transition: all 0.3s ease !important;
-      margin: 0 5px !important;
-    }
-
-    .fc-button:hover {
-      transform: translateY(-2px) !important;
-      box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4) !important;
-      background: linear-gradient(135deg, #357ABD, #2E6BA8) !important;
-    }
-
-    .fc-button:active,
-    .fc-button:focus {
-      box-shadow: 0 2px 10px rgba(74, 144, 226, 0.3) !important;
-      transform: translateY(0) !important;
-    }
-
-    .fc-state-active {
-      background: linear-gradient(135deg, #2E6BA8, #1E4A73) !important;
-      box-shadow: 0 4px 15px rgba(46, 107, 168, 0.3) !important;
-    }
-
-    /* Calendar Grid Styling */
-    .fc-view-container {
-      border-radius: 15px !important;
-      overflow: hidden !important;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.08) !important;
-    }
-
-    .fc-widget-header {
-      background: linear-gradient(135deg, #6B7280, #4B5563) !important;
-      color: white !important;
-      font-weight: 600 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.5px !important;
-      padding: 15px 8px !important;
-      border: none !important;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
-    }
-
-    .fc-day-header {
-      background: linear-gradient(135deg, #6B7280, #4B5563) !important;
-      color: white !important;
-      font-weight: 600 !important;
-      padding: 12px !important;
-      border: none !important;
-    }
-
-    .fc-widget-content {
-      border: 1px solid #E5E7EB !important;
-      background: #FEFEFE !important;
-      transition: all 0.2s ease !important;
-    }
-
-    .fc-day:hover {
-      background: linear-gradient(135deg, #EBF4FF, #DBEAFE) !important;
-    }
-
-    .fc-today {
-      background: linear-gradient(135deg, #EBF4FF, #DBEAFE) !important;
-      border: 2px solid #4A90E2 !important;
-      font-weight: bold !important;
-    }
-
-    .fc-other-month {
-      background: #F9FAFB !important;
-      color: #9CA3AF !important;
-    }
-
-    /* Event Styling */
-    .fc-event {
-      background: linear-gradient(135deg, #4A90E2, #357ABD) !important;
-      border: none !important;
-      border-radius: 8px !important;
-      padding: 4px 8px !important;
-      box-shadow: 0 3px 10px rgba(74, 144, 226, 0.3) !important;
-      transition: all 0.3s ease !important;
-      font-weight: 500 !important;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
-    }
-
-    .fc-event:hover {
-      transform: translateY(-1px) !important;
-      box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4) !important;
-      background: linear-gradient(135deg, #357ABD, #2E6BA8) !important;
-    }
-
-    .fc-event-title {
-      font-weight: 600 !important;
-      color: white !important;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .toast-container {
-        right: 10px;
-        left: 10px;
-        max-width: none;
-      }
-
-      .toast {
-        transform: translateY(-100px);
-      }
-
-      .toast.show {
-        transform: translateY(0);
-      }
-
-      .toast.hide {
-        transform: translateY(-100px);
-      }
-
-      #calendar {
-        width: 98% !important;
-        padding: 15px !important;
-        margin: 10px auto !important;
-      }
-    }
-  </style>
-
   <script>
+
     $(document).ready(function () {
-      // Enhanced Toast Notification System
-      const ToastManager = {
-        container: null,
-
-        init() {
-          if (!this.container) {
-            this.container = $('<div class="toast-container"></div>');
-            $('body').append(this.container);
-          }
-        },
-
-        show(message, type = 'info', title = null, duration = 5000) {
-          this.init();
-
-          const icons = {
-            success: '✅',
-            error: '❌',
-            warning: '⚠️',
-            info: 'ℹ️'
-          };
-
-          const titles = {
-            success: 'Thành công',
-            error: 'Lỗi',
-            warning: 'Cảnh báo',
-            info: 'Thông tin'
-          };
-
-          const toastId = 'toast-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-          const toastTitle = title || titles[type];
-
-          const toastHtml = `
-            <div class="toast ${type}" id="${toastId}">
-              <div class="toast-icon">${icons[type]}</div>
-              <div class="toast-content">
-                <div class="toast-title">${toastTitle}</div>
-                <div class="toast-message">${message}</div>
-              </div>
-              <button class="toast-close" onclick="ToastManager.hide('${toastId}')">&times;</button>
-              <div class="toast-progress"></div>
-            </div>
-          `;
-
-          this.container.append(toastHtml);
-          const toast = $(`#${toastId}`);
-
-          // Show animation
-          setTimeout(() => toast.addClass('show'), 100);
-
-          // Progress bar animation
-          if (duration > 0) {
-            const progressBar = toast.find('.toast-progress');
-            progressBar.css('width', '100%');
-            setTimeout(() => {
-              progressBar.css({
-                'width': '0%',
-                'transition': `width ${duration}ms linear`
-              });
-            }, 200);
-
-            // Auto hide
-            setTimeout(() => this.hide(toastId), duration);
-          }
-
-          return toastId;
-        },
-
-        hide(toastId) {
-          const toast = $(`#${toastId}`);
-          if (toast.length) {
-            toast.removeClass('show').addClass('hide');
-            setTimeout(() => toast.remove(), 400);
-          }
-        },
-
-        success(message, title = null, duration = 4000) {
-          return this.show(message, 'success', title, duration);
-        },
-
-        error(message, title = null, duration = 6000) {
-          return this.show(message, 'error', title, duration);
-        },
-
-        warning(message, title = null, duration = 5000) {
-          return this.show(message, 'warning', title, duration);
-        },
-
-        info(message, title = null, duration = 4000) {
-          return this.show(message, 'info', title, duration);
-        }
-      };
-
-      // Enhanced Error Handling Functions
-      function handleAjaxError(xhr, status, error, context = '') {
-        console.error('AJAX Error:', {
-          context,
-          status,
-          error,
-          responseText: xhr.responseText,
-          statusCode: xhr.status
-        });
-
-        let errorMessage = 'Đã xảy ra lỗi không mong muốn';
-        let errorTitle = 'Lỗi';
-
-        // Try to parse JSON response
-        try {
-          const response = JSON.parse(xhr.responseText);
-          if (response.error) {
-            errorMessage = response.error;
-          }
-        } catch (e) {
-          // If not JSON, use status-based messages
-          switch (xhr.status) {
-            case 400:
-              errorMessage = 'Dữ liệu không hợp lệ';
-              break;
-            case 404:
-              errorMessage = 'Không tìm thấy sự kiện';
-              break;
-            case 500:
-              errorMessage = 'Lỗi máy chủ nội bộ';
-              break;
-            case 0:
-              errorMessage = 'Không thể kết nối với máy chủ';
-              errorTitle = 'Lỗi kết nối';
-              break;
-          }
-        }
-
-        ToastManager.error(errorMessage, errorTitle);
-      }
-
-      function validateEventData(eventData) {
-        const errors = [];
-
-        if (!eventData.title || eventData.title.trim() === '') {
-          errors.push('Tiêu đề sự kiện không được để trống');
-        }
-
-        if (!eventData.start) {
-          errors.push('Ngày bắt đầu không được để trống');
-        }
-
-        if (eventData.start && eventData.end && new Date(eventData.start) > new Date(eventData.end)) {
-          errors.push('Ngày kết thúc phải sau ngày bắt đầu');
-        }
-
-        return errors;
-      }
-
-      // Calendar Functions
       function fmt(date) {
         return date.format("YYYY-MM-DD HH:mm");
+
       }
 
       var date = new Date();
@@ -492,10 +31,11 @@
           center: 'title',
           right: 'month,agendaWeek,agendaDay'
         },
+        // Add Vietnamese month and day names
         monthNames: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
-          'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                     'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
         monthNamesShort: ['Th1', 'Th2', 'Th3', 'Th4', 'Th5', 'Th6',
-          'Th7', 'Th8', 'Th9', 'Th10', 'Th11', 'Th12'],
+                         'Th7', 'Th8', 'Th9', 'Th10', 'Th11', 'Th12'],
         dayNames: ['Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy'],
         dayNamesShort: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
         buttonText: {
@@ -507,18 +47,20 @@
 
         events: "http://localhost:3000/api/events",
 
+        // Convert the allDay from string to boolean
         eventRender: function (event, element, view) {
-          if (event.allDay === 'true') {
-            event.allDay = true;
-          } else {
-            event.allDay = false;
+          // Ensure allDay is boolean
+          event.allDay = Boolean(event.allDay);
+
+          // Add error handling for malformed events
+          if (!event.title) {
+            event.title = 'Untitled Event';
           }
         },
-
         selectable: true,
         selectHelper: true,
         select: function (start, end, allDay) {
-          // Create event dialog (keeping your existing dialog code but replacing alerts)
+          // Create a modal dialog for event creation with enhanced styling
           var dialogHtml = `
             <div id="eventDialog" style="
               background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
@@ -824,6 +366,52 @@
           // Add dialog to page
           $('body').append(dialogHtml);
 
+          // Add hover effects for buttons
+          $('#cancelBtn').hover(
+            function() {
+              $(this).css({
+                'transform': 'translateY(-2px)',
+                'box-shadow': '0 6px 20px rgba(149, 165, 166, 0.4)'
+              });
+            },
+            function() {
+              $(this).css({
+                'transform': 'translateY(0)',
+                'box-shadow': '0 4px 15px rgba(149, 165, 166, 0.3)'
+              });
+            }
+          );
+
+          $('#saveBtn').hover(
+            function() {
+              $(this).css({
+                'transform': 'translateY(-2px)',
+                'box-shadow': '0 6px 20px rgba(0, 184, 148, 0.4)'
+              });
+            },
+            function() {
+              $(this).css({
+                'transform': 'translateY(0)',
+                'box-shadow': '0 4px 15px rgba(0, 184, 148, 0.3)'
+              });
+            }
+          );
+
+          // Add focus effects for input
+          $('#eventTitle').focus(function() {
+            $(this).css({
+              'border-color': '#74b9ff',
+              'box-shadow': '0 0 0 3px rgba(116, 185, 255, 0.1)',
+              'background': 'white'
+            });
+          }).blur(function() {
+            $(this).css({
+              'border-color': '#e9ecef',
+              'box-shadow': 'none',
+              'background': '#f8f9fa'
+            });
+          });
+
           // Handle all-day checkbox change
           $('#allDayCheck').change(function() {
             if ($(this).is(':checked')) {
@@ -841,42 +429,42 @@
             calendar.fullCalendar('unselect');
           });
 
-          // Handle save button with enhanced error handling
+          // Handle save button
           $('#saveBtn').click(function() {
             var title = $('#eventTitle').val().trim();
+            if (!title) {
+              alert('Vui lòng nhập tiêu đề sự kiện');
+              return;
+            }
+
             var isAllDay = $('#allDayCheck').is(':checked');
             var startFormatted, endFormatted;
 
-            // Create event data object
-            var eventData = {
-              title: title,
-              allDay: isAllDay
-            };
-
             if (isAllDay) {
-              eventData.start = $('#allDayStartDate').val();
-              eventData.end = $('#allDayEndDate').val();
+              // For all-day events, use date only format
+              startFormatted = $('#allDayStartDate').val();
+              endFormatted = $('#allDayEndDate').val();
             } else {
+              // For timed events, construct datetime from separate fields (24-hour format)
               var startDate = $('#startDate').val();
               var startHour = $('#startHour').val();
               var startMinute = $('#startMinute').val();
+
               var endDate = $('#endDate').val();
               var endHour = $('#endHour').val();
               var endMinute = $('#endMinute').val();
 
-              eventData.start = startDate + ' ' + startHour + ':' + startMinute;
-              eventData.end = endDate + ' ' + endHour + ':' + endMinute;
+              startFormatted = startDate + ' ' + startHour + ':' + startMinute;
+              endFormatted = endDate + ' ' + endHour + ':' + endMinute;
             }
 
-            // Validate event data
-            const validationErrors = validateEventData(eventData);
-            if (validationErrors.length > 0) {
-              ToastManager.warning(validationErrors.join('<br>'), 'Dữ liệu không hợp lệ');
-              return;
-            }
-
-            // Show loading state
-            $('#saveBtn').text('Đang lưu...').prop('disabled', true);
+            // Create the event data object
+            var eventData = {
+              title: title,
+              start: startFormatted,
+              end: endFormatted,
+              allDay: isAllDay
+            };
 
             $.ajax({
               url: 'http://localhost:3000/api/add-event',
@@ -885,13 +473,14 @@
               type: "POST",
               success: function (response) {
                 console.log('Event added successfully:', response);
-                ToastManager.success('Sự kiện đã được tạo thành công!', 'Thành công');
+                // Refresh calendar to show the new event with proper ID from server
                 $('#calendar').fullCalendar('refetchEvents');
                 $('#eventDialog, #dialogOverlay').remove();
               },
               error: function(xhr, status, error) {
-                handleAjaxError(xhr, status, error, 'Tạo sự kiện');
-                $('#saveBtn').text('💾 Lưu sự kiện').prop('disabled', false);
+                console.error('Error adding event:', error);
+                console.error('Response:', xhr.responseText);
+                alert('Lỗi khi thêm sự kiện. Vui lòng thử lại.');
               }
             });
           });
@@ -904,7 +493,6 @@
         eventDrop: function (event, delta) {
           var start = fmt(event.start);
           var end = fmt(event.end);
-
           $.ajax({
             url: 'http://localhost:3000/api/update-event',
             data: JSON.stringify({ title: event.title, start: start, end: end, id: event.id }),
@@ -912,22 +500,22 @@
             type: "POST",
             success: function (json) {
               console.log("Event updated successfully");
-              ToastManager.success('Sự kiện đã được di chuyển thành công!');
             },
             error: function(xhr, status, error) {
-              handleAjaxError(xhr, status, error, 'Di chuyển sự kiện');
+              console.error('Error updating event:', error);
+              alert('Lỗi khi cập nhật sự kiện. Vui lòng thử lại.');
+              // Revert the event to its original position
               $('#calendar').fullCalendar('refetchEvents');
             }
           });
         },
-
         eventClick: function (event) {
-          // Event edit dialog with enhanced error handling
+          // Create a modal dialog for event editing with enhanced styling
           var startMoment = moment(event.start);
           var endMoment = event.end ? moment(event.end) : startMoment.clone().add(1, 'hour');
           var isAllDay = event.allDay;
 
-          var editDialogHtml = `
+          var dialogHtml = `
             <div id="editEventDialog" style="
               background: linear-gradient(135deg, #E67E22 0%, #D35400 100%);
               border: none;
@@ -980,6 +568,208 @@
                     transition: all 0.3s ease;
                     background: #F9FAFB;
                   " placeholder="Nhập tiêu đề sự kiện" value="${event.title.replace(/"/g, '&quot;')}">
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                  <label style="
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    padding: 12px 16px;
+                    background: linear-gradient(135deg, #E67E22, #D35400);
+                    color: white;
+                    border-radius: 8px;
+                    font-weight: 500;
+                    transition: all 0.3s ease;
+                  ">
+                    <input type="checkbox" id="editAllDayCheck" ${isAllDay ? 'checked' : ''} style="
+                      margin-right: 10px;
+                      transform: scale(1.2);
+                    "> 📅 Sự kiện cả ngày
+                  </label>
+                </div>
+
+                <div id="editTimeFields" style="margin-bottom: 20px; ${isAllDay ? 'display: none;' : ''}">
+                  <div style="
+                    background: linear-gradient(135deg, #FDF2E9, #FCE4EC);
+                    padding: 20px;
+                    border-radius: 10px;
+                    margin-bottom: 20px;
+                    border: 1px solid rgba(230, 126, 34, 0.2);
+                  ">
+                    <label style="
+                      display: block;
+                      margin-bottom: 12px;
+                      font-weight: 600;
+                      color: #E67E22;
+                      font-size: 14px;
+                      text-transform: uppercase;
+                      letter-spacing: 0.5px;
+                    ">🕐 Ngày & giờ bắt đầu</label>
+                    <div style="margin-bottom: 12px;">
+                      <input type="date" id="editStartDate" style="
+                        width: 100%;
+                        padding: 10px 14px;
+                        border: 2px solid rgba(255,255,255,0.8);
+                        border-radius: 6px;
+                        font-size: 14px;
+                        background: rgba(255,255,255,0.9);
+                        box-sizing: border-box;
+                      " value="${startMoment.format('YYYY-MM-DD')}">
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                      <select id="editStartHour" style="
+                        flex: 1;
+                        padding: 10px 14px;
+                        border: 2px solid rgba(255,255,255,0.8);
+                        border-radius: 6px;
+                        font-size: 14px;
+                        background: rgba(255,255,255,0.9);
+                        cursor: pointer;
+                      ">
+                        ${Array.from({length: 24}, (_, i) => {
+            const hour = i.toString().padStart(2, '0');
+            const selected = i === startMoment.hour() ? 'selected' : '';
+            return `<option value="${hour}" ${selected}>${hour}</option>`;
+          }).join('')}
+                      </select>
+                      <span style="
+                        font-size: 18px;
+                        font-weight: bold;
+                        color: #E67E22;
+                      ">:</span>
+                      <select id="editStartMinute" style="
+                        flex: 1;
+                        padding: 10px 14px;
+                        border: 2px solid rgba(255,255,255,0.8);
+                        border-radius: 6px;
+                        font-size: 14px;
+                        background: rgba(255,255,255,0.9);
+                        cursor: pointer;
+                      ">
+                        ${Array.from({length: 60}, (_, i) => {
+            const minute = i.toString().padStart(2, '0');
+            const selected = i === startMoment.minute() ? 'selected' : '';
+            return `<option value="${minute}" ${selected}>${minute}</option>`;
+          }).join('')}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div style="
+                    background: linear-gradient(135deg, #F3F4F6, #E5E7EB);
+                    padding: 20px;
+                    border-radius: 10px;
+                    border: 1px solid rgba(107, 114, 128, 0.2);
+                  ">
+                    <label style="
+                      display: block;
+                      margin-bottom: 12px;
+                      font-weight: 600;
+                      color: #6B7280;
+                      font-size: 14px;
+                      text-transform: uppercase;
+                      letter-spacing: 0.5px;
+                    ">🕕 Ngày & giờ kết thúc</label>
+                    <div style="margin-bottom: 12px;">
+                      <input type="date" id="editEndDate" style="
+                        width: 100%;
+                        padding: 10px 14px;
+                        border: 2px solid rgba(255,255,255,0.8);
+                        border-radius: 6px;
+                        font-size: 14px;
+                        background: rgba(255,255,255,0.9);
+                        box-sizing: border-box;
+                      " value="${endMoment.format('YYYY-MM-DD')}">
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                      <select id="editEndHour" style="
+                        flex: 1;
+                        padding: 10px 14px;
+                        border: 2px solid rgba(255,255,255,0.8);
+                        border-radius: 6px;
+                        font-size: 14px;
+                        background: rgba(255,255,255,0.9);
+                        cursor: pointer;
+                      ">
+                        ${Array.from({length: 24}, (_, i) => {
+            const hour = i.toString().padStart(2, '0');
+            const selected = i === endMoment.hour() ? 'selected' : '';
+            return `<option value="${hour}" ${selected}>${hour}</option>`;
+          }).join('')}
+                      </select>
+                      <span style="
+                        font-size: 18px;
+                        font-weight: bold;
+                        color: #6B7280;
+                      ">:</span>
+                      <select id="editEndMinute" style="
+                        flex: 1;
+                        padding: 10px 14px;
+                        border: 2px solid rgba(255,255,255,0.8);
+                        border-radius: 6px;
+                        font-size: 14px;
+                        background: rgba(255,255,255,0.9);
+                        cursor: pointer;
+                      ">
+                        ${Array.from({length: 60}, (_, i) => {
+            const minute = i.toString().padStart(2, '0');
+            const selected = i === endMoment.minute() ? 'selected' : '';
+            return `<option value="${minute}" ${selected}>${minute}</option>`;
+          }).join('')}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="editAllDayFields" style="margin-bottom: 20px; ${!isAllDay ? 'display: none;' : ''}">
+                  <div style="
+                    background: linear-gradient(135deg, #FDF2E9, #FCE4EC);
+                    padding: 20px;
+                    border-radius: 10px;
+                    border: 1px solid rgba(230, 126, 34, 0.2);
+                  ">
+                    <div style="margin-bottom: 15px;">
+                      <label style="
+                        display: block;
+                        margin-bottom: 8px;
+                        font-weight: 600;
+                        color: #E67E22;
+                        font-size: 14px;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                      ">📅 Ngày bắt đầu</label>
+                      <input type="date" id="editAllDayStartDate" style="
+                        width: 100%;
+                        padding: 10px 14px;
+                        border: 2px solid rgba(255,255,255,0.8);
+                        border-radius: 6px;
+                        font-size: 14px;
+                        background: rgba(255,255,255,0.9);
+                        box-sizing: border-box;
+                      " value="${startMoment.format('YYYY-MM-DD')}">
+                    </div>
+                    <div>
+                      <label style="
+                        display: block;
+                        margin-bottom: 8px;
+                        font-weight: 600;
+                        color: #E67E22;
+                        font-size: 14px;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                      ">📅 Ngày kết thúc</label>
+                      <input type="date" id="editAllDayEndDate" style="
+                        width: 100%;
+                        padding: 10px 14px;
+                        border: 2px solid rgba(255,255,255,0.8);
+                        border-radius: 6px;
+                        font-size: 14px;
+                        background: rgba(255,255,255,0.9);
+                        box-sizing: border-box;
+                      " value="${endMoment.format('YYYY-MM-DD')}">
+                    </div>
+                  </div>
                 </div>
 
                 <div style="text-align: center; margin-top: 30px;">
@@ -1043,30 +833,88 @@
           `;
 
           // Add dialog to page
-          $('body').append(editDialogHtml);
+          $('body').append(dialogHtml);
+
+          // Add hover effects for buttons
+          $('#editCancelBtn').hover(
+            function() {
+              $(this).css({
+                'transform': 'translateY(-2px)',
+                'box-shadow': '0 6px 20px rgba(149, 165, 166, 0.4)'
+              });
+            },
+            function() {
+              $(this).css({
+                'transform': 'translateY(0)',
+                'box-shadow': '0 4px 15px rgba(149, 165, 166, 0.3)'
+              });
+            }
+          );
+
+          $('#deleteBtn').hover(
+            function() {
+              $(this).css({
+                'transform': 'translateY(-2px)',
+                'box-shadow': '0 6px 20px rgba(231, 76, 60, 0.4)'
+              });
+            },
+            function() {
+              $(this).css({
+                'transform': 'translateY(0)',
+                'box-shadow': '0 4px 15px rgba(231, 76, 60, 0.3)'
+              });
+            }
+          );
+
+          $('#updateBtn').hover(
+            function() {
+              $(this).css({
+                'transform': 'translateY(-2px)',
+                'box-shadow': '0 6px 20px rgba(230, 126, 34, 0.4)'
+              });
+            },
+            function() {
+              $(this).css({
+                'transform': 'translateY(0)',
+                'box-shadow': '0 4px 15px rgba(230, 126, 34, 0.3)'
+              });
+            }
+          );
+
+          // Add focus effects for input
+          $('#editEventTitle').focus(function() {
+            $(this).css({
+              'border-color': '#E67E22',
+              'box-shadow': '0 0 0 3px rgba(230, 126, 34, 0.1)',
+              'background': 'white'
+            });
+          }).blur(function() {
+            $(this).css({
+              'border-color': '#e9ecef',
+              'box-shadow': 'none',
+              'background': '#f8f9fa'
+            });
+          });
+
+          // Handle all-day checkbox change
+          $('#editAllDayCheck').change(function() {
+            if ($(this).is(':checked')) {
+              $('#editTimeFields').hide();
+              $('#editAllDayFields').show();
+            } else {
+              $('#editTimeFields').show();
+              $('#editAllDayFields').hide();
+            }
+          });
 
           // Handle cancel button
           $('#editCancelBtn, #editDialogOverlay').click(function() {
             $('#editEventDialog, #editDialogOverlay').remove();
           });
 
-          // Handle delete button with confirmation
+          // Handle delete button
           $('#deleteBtn').click(function() {
-            // Show confirmation toast
-            const confirmToast = ToastManager.warning(
-                    'Bạn có chắc chắn muốn xóa sự kiện này không? <br><br>' +
-                    '<button onclick="confirmDelete()" style="background: #E74C3C; color: white; border: none; padding: 8px 16px; border-radius: 4px; margin-right: 8px; cursor: pointer;">Xóa</button>' +
-                    '<button onclick="ToastManager.hide(\'' + confirmToast + '\')" style="background: #95A5A6; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Hủy</button>',
-                    'Xác nhận xóa sự kiện',
-                    0 // Don't auto-hide
-            );
-
-            // Define confirm delete function globally
-            window.confirmDelete = function() {
-              ToastManager.hide(confirmToast);
-
-              $('#deleteBtn').text('Đang xóa...').prop('disabled', true);
-
+            if (confirm("Bạn có chắc chắn muốn xóa sự kiện này?")) {
               $.ajax({
                 type: "DELETE",
                 url: "http://localhost:3000/api/delete-event",
@@ -1075,35 +923,53 @@
                 success: function (json) {
                   $('#calendar').fullCalendar('removeEvents', event.id);
                   $('#editEventDialog, #editDialogOverlay').remove();
-                  ToastManager.success('Sự kiện đã được xóa thành công!', 'Đã xóa');
                   console.log("Event deleted successfully");
                 },
                 error: function(xhr, status, error) {
-                  handleAjaxError(xhr, status, error, 'Xóa sự kiện');
-                  $('#deleteBtn').text('🗑️ Xóa').prop('disabled', false);
+                  console.error('Error deleting event:', error);
+                  alert('Lỗi khi xóa sự kiện. Vui lòng thử lại.');
                 }
               });
-            };
+            }
           });
 
           // Handle update button
           $('#updateBtn').click(function() {
             var title = $('#editEventTitle').val().trim();
-
             if (!title) {
-              ToastManager.warning('Tiêu đề sự kiện không được để trống', 'Dữ liệu không hợp lệ');
+              alert('Vui lòng nhập tiêu đề sự kiện');
               return;
             }
 
+            var isAllDay = $('#editAllDayCheck').is(':checked');
+            var startFormatted, endFormatted;
+
+            if (isAllDay) {
+              // For all-day events, use date only format
+              startFormatted = $('#editAllDayStartDate').val();
+              endFormatted = $('#editAllDayEndDate').val();
+            } else {
+              // For timed events, construct datetime from separate fields (24-hour format)
+              var startDate = $('#editStartDate').val();
+              var startHour = $('#editStartHour').val();
+              var startMinute = $('#editStartMinute').val();
+
+              var endDate = $('#editEndDate').val();
+              var endHour = $('#editEndHour').val();
+              var endMinute = $('#editEndMinute').val();
+
+              startFormatted = startDate + ' ' + startHour + ':' + startMinute;
+              endFormatted = endDate + ' ' + endHour + ':' + endMinute;
+            }
+
+            // Create the updated event data object
             var eventData = {
               id: event.id,
               title: title,
-              start: fmt(startMoment),
-              end: fmt(endMoment),
+              start: startFormatted,
+              end: endFormatted,
               allDay: isAllDay
             };
-
-            $('#updateBtn').text('Đang cập nhật...').prop('disabled', true);
 
             $.ajax({
               url: 'http://localhost:3000/api/update-event',
@@ -1112,13 +978,14 @@
               type: "POST",
               success: function (response) {
                 console.log('Event updated successfully:', response);
-                ToastManager.success('Sự kiện đã được cập nhật thành công!', 'Đã cập nhật');
+                // Refresh calendar to show the updated event
                 $('#calendar').fullCalendar('refetchEvents');
                 $('#editEventDialog, #editDialogOverlay').remove();
               },
               error: function(xhr, status, error) {
-                handleAjaxError(xhr, status, error, 'Cập nhật sự kiện');
-                $('#updateBtn').text('💾 Cập nhật sự kiện').prop('disabled', false);
+                console.error('Error updating event:', error);
+                console.error('Response:', xhr.responseText);
+                alert('Lỗi khi cập nhật sự kiện. Vui lòng thử lại.');
               }
             });
           });
@@ -1130,7 +997,6 @@
         eventResize: function (event) {
           var start = fmt(event.start);
           var end = fmt(event.end);
-
           $.ajax({
             url: 'http://localhost:3000/api/update-event',
             data: JSON.stringify({ title: event.title, start: start, end: end, id: event.id }),
@@ -1138,55 +1004,282 @@
             type: "POST",
             success: function (json) {
               console.log("Event resized successfully");
-              ToastManager.success('Kích thước sự kiện đã được thay đổi!');
             },
             error: function(xhr, status, error) {
-              handleAjaxError(xhr, status, error, 'Thay đổi kích thước sự kiện');
+              console.error('Error resizing event:', error);
+              alert('Error resizing event. Please try again.');
+              // Revert the event to its original size
               $('#calendar').fullCalendar('refetchEvents');
             }
           });
-        },
-
-        // Add loading and error states for event fetching
-        loading: function(bool) {
-          if (bool) {
-            ToastManager.info('Đang tải sự kiện...', 'Tải dữ liệu', 2000);
-          }
-        },
-
-        eventSources: [
-          {
-            url: 'http://localhost:3000/api/events',
-            error: function() {
-              handleAjaxError({
-                status: 0,
-                responseText: '{"error": "Không thể tải danh sách sự kiện"}'
-              }, 'error', 'Network Error', 'Tải sự kiện');
-            }
-          }
-        ]
-      });
-
-      // Global error handler for uncaught AJAX errors
-      $(document).ajaxError(function(event, xhr, settings, thrownError) {
-        if (settings.url && settings.url.includes('/api/')) {
-          console.error('Global AJAX Error:', {
-            url: settings.url,
-            status: xhr.status,
-            error: thrownError
-          });
         }
+
       });
 
-      // Show welcome message
-      setTimeout(() => {
-        ToastManager.info('Chào mừng bạn đến với Lịch Sự Kiện!', 'Chào mừng', 3000);
-      }, 1000);
-
-      // Make ToastManager globally available
-      window.ToastManager = ToastManager;
     });
+
   </script>
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    #calendar {
+      width: 95%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.1);
+      padding: 30px;
+      box-sizing: border-box;
+    }
+
+    /* Calendar Header Styling */
+    .fc-toolbar {
+      background: linear-gradient(135deg, #4A90E2, #357ABD) !important;
+      padding: 20px 25px !important;
+      border-radius: 15px !important;
+      margin-bottom: 25px !important;
+      box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3) !important;
+    }
+
+    .fc-toolbar h2 {
+      color: white !important;
+      font-size: 28px !important;
+      font-weight: 600 !important;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+      margin: 0 !important;
+      letter-spacing: -0.5px !important;
+    }
+
+    .fc-button {
+      background: linear-gradient(135deg, #4A90E2, #357ABD) !important;
+      border: none !important;
+      color: white !important;
+      padding: 10px 18px !important;
+      border-radius: 25px !important;
+      font-weight: 600 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+      box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3) !important;
+      transition: all 0.3s ease !important;
+      margin: 0 5px !important;
+    }
+
+    .fc-button:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4) !important;
+      background: linear-gradient(135deg, #357ABD, #2E6BA8) !important;
+    }
+
+    .fc-button:active,
+    .fc-button:focus {
+      box-shadow: 0 2px 10px rgba(74, 144, 226, 0.3) !important;
+      transform: translateY(0) !important;
+    }
+
+    .fc-state-active {
+      background: linear-gradient(135deg, #2E6BA8, #1E4A73) !important;
+      box-shadow: 0 4px 15px rgba(46, 107, 168, 0.3) !important;
+    }
+
+    /* Calendar Grid Styling */
+    .fc-view-container {
+      border-radius: 15px !important;
+      overflow: hidden !important;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08) !important;
+    }
+
+    .fc-widget-header {
+      background: linear-gradient(135deg, #6B7280, #4B5563) !important;
+      color: white !important;
+      font-weight: 600 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+      padding: 15px 8px !important;
+      border: none !important;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+    }
+
+    .fc-day-header {
+      background: linear-gradient(135deg, #6B7280, #4B5563) !important;
+      color: white !important;
+      font-weight: 600 !important;
+      padding: 12px !important;
+      border: none !important;
+    }
+
+    .fc-widget-content {
+      border: 1px solid #E5E7EB !important;
+      background: #FEFEFE !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .fc-day:hover {
+      background: linear-gradient(135deg, #EBF4FF, #DBEAFE) !important;
+    }
+
+    .fc-today {
+      background: linear-gradient(135deg, #EBF4FF, #DBEAFE) !important;
+      border: 2px solid #4A90E2 !important;
+      font-weight: bold !important;
+    }
+
+    .fc-other-month {
+      background: #F9FAFB !important;
+      color: #9CA3AF !important;
+    }
+
+    /* Event Styling */
+    .fc-event {
+      background: linear-gradient(135deg, #4A90E2, #357ABD) !important;
+      border: none !important;
+      border-radius: 8px !important;
+      padding: 4px 8px !important;
+      box-shadow: 0 3px 10px rgba(74, 144, 226, 0.3) !important;
+      transition: all 0.3s ease !important;
+      font-weight: 500 !important;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+    }
+
+    .fc-event:hover {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4) !important;
+      background: linear-gradient(135deg, #357ABD, #2E6BA8) !important;
+    }
+
+    .fc-event-title {
+      font-weight: 600 !important;
+      color: white !important;
+    }
+
+    /* Time Grid Styling */
+    .fc-time-grid .fc-slats td {
+      border-top: 1px solid #E5E7EB !important;
+      height: 2em !important;
+    }
+
+    .fc-axis {
+      background: #F9FAFB !important;
+      color: #6B7280 !important;
+      font-weight: 500 !important;
+      border: 1px solid #E5E7EB !important;
+    }
+
+    .fc-time-grid .fc-bg .fc-day {
+      background: linear-gradient(to bottom, #FFFFFF, #F9FAFB) !important;
+    }
+
+    /* Selection Styling */
+    .fc-highlight {
+      background: linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(53, 122, 189, 0.2)) !important;
+      border: 2px dashed #4A90E2 !important;
+    }
+
+    /* Week/Day View Styling */
+    .fc-agenda-view .fc-day-grid {
+      background: linear-gradient(135deg, #EBF4FF, #DBEAFE) !important;
+    }
+
+    .fc-agenda-view .fc-day-grid .fc-day {
+      background: rgba(255,255,255,0.8) !important;
+      border: 1px solid rgba(255,255,255,0.3) !important;
+    }
+
+    /* Month View Number Styling */
+    .fc-day-number {
+      color: #374151 !important;
+      font-weight: 600 !important;
+      font-size: 14px !important;
+      padding: 8px !important;
+    }
+
+    .fc-today .fc-day-number {
+      background: linear-gradient(135deg, #4A90E2, #357ABD) !important;
+      color: white !important;
+      border-radius: 50% !important;
+      width: 30px !important;
+      height: 30px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin: 4px !important;
+      box-shadow: 0 3px 10px rgba(74, 144, 226, 0.3) !important;
+    }
+
+    /* More Events Link */
+    .fc-more {
+      background: linear-gradient(135deg, #6B7280, #4B5563) !important;
+      color: white !important;
+      border-radius: 12px !important;
+      padding: 2px 8px !important;
+      font-weight: 600 !important;
+      box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3) !important;
+      border: none !important;
+      text-transform: uppercase !important;
+      font-size: 10px !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    /* Loading and Empty States */
+    .fc-loading {
+      background: linear-gradient(135deg, #EBF4FF, #DBEAFE) !important;
+      border-radius: 10px !important;
+      padding: 20px !important;
+      text-align: center !important;
+      color: #4A90E2 !important;
+      font-weight: 600 !important;
+    }
+
+    /* Custom scrollbar for time views */
+    .fc-scroller::-webkit-scrollbar {
+      width: 8px !important;
+    }
+
+    .fc-scroller::-webkit-scrollbar-track {
+      background: #F3F4F6 !important;
+      border-radius: 4px !important;
+    }
+
+    .fc-scroller::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #4A90E2, #357ABD) !important;
+      border-radius: 4px !important;
+    }
+
+    .fc-scroller::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, #357ABD, #2E6BA8) !important;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      #calendar {
+        width: 98% !important;
+        padding: 15px !important;
+        margin: 10px auto !important;
+      }
+
+      .fc-toolbar {
+        padding: 15px !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+      }
+
+      .fc-toolbar h2 {
+        font-size: 20px !important;
+        margin-bottom: 10px !important;
+      }
+
+      .fc-button {
+        padding: 8px 12px !important;
+        font-size: 12px !important;
+      }
+    }
+  </style>
 </head>
 <body>
 <div id='calendar'></div>
