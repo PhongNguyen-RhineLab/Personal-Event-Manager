@@ -1,4 +1,4 @@
-# FullCalendar Event Management System
+# Personal Event Management System
 
 A modern, interactive calendar application built with FullCalendar.js that allows users to create, edit, delete, and manage events with a beautiful, responsive user interface. The application features Vietnamese localization and supports both MySQL database storage and real-time event management.
 
