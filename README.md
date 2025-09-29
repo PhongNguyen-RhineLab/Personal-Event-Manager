@@ -1,158 +1,358 @@
-# Personal Event Management System
+# 📅 FullCalendar Event Management System
 
-A modern, interactive calendar application built with FullCalendar.js that allows users to create, edit, delete, and manage events with a beautiful, responsive user interface. The application features Vietnamese localization and supports both MySQL database storage and real-time event management.
+<div align="center">
 
-## Features
+![Calendar](https://img.shields.io/badge/Calendar-FullCalendar-blue?style=for-the-badge)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
-- **Interactive Calendar Views**: Month, week, and day views with smooth navigation
-- **Event Management**: Create, edit, delete, and drag-and-drop events
-- **All-Day & Timed Events**: Support for both all-day and time-specific events
-- **Beautiful UI**: Modern gradient design with hover effects and animations
-- **Responsive Design**: Mobile-friendly interface that works on all devices
-- **Real-time Updates**: Events are persisted on the server and updated in real-time
-- **Drag & Drop**: Move events between dates by dragging
-- **Event Resizing**: Resize events to change duration (in week/day views)
-- **Vietnamese Localization**: Full Vietnamese language support for months, days, and buttons
-- **MySQL Database**: Persistent storage with MySQL database integration
+*A modern, interactive calendar application with Vietnamese localization and real-time event management*
 
-## Technology Stack
+[Features](#-features) • [Demo](#-demo) • [Installation](#-installation) • [Usage](#-usage) • [API](#-api-endpoints) • [Contributing](#-contributing)
 
-- **Frontend**: HTML5, CSS3, JavaScript, jQuery
-- **Calendar Library**: FullCalendar.js v3
-- **UI Components**: jQuery UI
-- **Date Handling**: Moment.js
-- **Backend**: Node.js with Express (server.js)
-- **Database**: MySQL with mysql2 driver
-- **Package Manager**: npm
+</div>
 
-## Project Structure
+---
+
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%">
+
+### 🗓️ **Calendar Views**
+- 📊 Month, Week, and Day views
+- 🎯 Smooth navigation between dates
+- 📱 Responsive design for all devices
+- 🌏 Vietnamese localization
+
+</td>
+<td width="50%">
+
+### ⚡ **Event Management**
+- ➕ Create new events
+- ✏️ Edit existing events
+- 🗑️ Delete events
+- 🎨 Drag & drop functionality
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 🎨 **User Interface**
+- 🌈 Modern gradient design
+- ✨ Smooth animations
+- 🖱️ Hover effects
+- 📐 Clean typography
+
+</td>
+<td width="50%">
+
+### 💾 **Data Management**
+- 🔄 Real-time updates
+- 💿 MySQL database storage
+- 🔄 Event persistence
+- 📊 RESTful API
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🚀 Demo
+
+### 📸 Screenshots
+
+> **Note:** Add screenshots of your calendar application here to showcase the UI
+
+### 🎯 Key Functionalities
+
+- **📅 Multi-view Calendar**: Switch between month, week, and day views
+- **🖱️ Drag & Drop**: Move events between dates effortlessly
+- **📏 Event Resizing**: Adjust event duration in week/day views
+- **⏰ All-day Events**: Support for both timed and all-day events
+- **🇻🇳 Vietnamese Interface**: Fully localized for Vietnamese users
+
+---
+
+## 🛠️ Technology Stack
+
+<div align="center">
+
+| Frontend | Backend | Database | Tools |
+|----------|---------|----------|-------|
+| ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) | ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white) | ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white) | ![npm](https://img.shields.io/badge/npm-CB3837?style=flat-square&logo=npm&logoColor=white) |
+| ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) | ![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white) | ![mysql2](https://img.shields.io/badge/mysql2-4479A1?style=flat-square&logo=mysql&logoColor=white) | ![Nodemon](https://img.shields.io/badge/Nodemon-76D04B?style=flat-square&logo=nodemon&logoColor=white) |
+| ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) | ![CORS](https://img.shields.io/badge/CORS-FF6B6B?style=flat-square) | | ![dotenv](https://img.shields.io/badge/dotenv-ECD53F?style=flat-square) |
+| ![jQuery](https://img.shields.io/badge/jQuery-0769AD?style=flat-square&logo=jquery&logoColor=white) | ![Body Parser](https://img.shields.io/badge/Body--Parser-000000?style=flat-square) | | |
+| ![FullCalendar](https://img.shields.io/badge/FullCalendar-FF6B35?style=flat-square) | | | |
+| ![Moment.js](https://img.shields.io/badge/Moment.js-4A154B?style=flat-square) | | | |
+
+</div>
+
+---
+
+## 📁 Project Structure
 
 ```
-fullcalendar/
-├── index.html              # Main HTML file with Vietnamese calendar interface
-├── server.js              # Express server with API endpoints
-├── db.js                  # MySQL database configuration and initialization
-├── package.json           # Project dependencies
-├── README.md              # Project documentation
-└── lib/                   # Client-side libraries
-    ├── fullcalendar.js         # FullCalendar library
-    ├── fullcalendar.min.css    # FullCalendar styles
-    ├── fullcalendar.min.js     # Minified FullCalendar
-    ├── fullcalendar.print.css  # Print styles
-    ├── jquery-ui.custom.min.js # jQuery UI components
-    ├── jquery.min.js           # jQuery library
-    └── moment.min.js           # Moment.js for date handling
+📦 fullcalendar/
+├── 📄 index.html              # Main application interface
+├── 🚀 server.js              # Express server with API routes
+├── 🗄️ db.js                  # MySQL database configuration
+├── 📋 package.json           # Project dependencies & scripts
+├── 📖 README.md              # Project documentation
+├── 📜 LICENSE                # License file
+└── 📁 lib/                   # Client-side libraries
+    ├── 📅 fullcalendar.js         # FullCalendar core library
+    ├── 🎨 fullcalendar.min.css    # Calendar styling
+    ├── ⚡ fullcalendar.min.js     # Minified FullCalendar
+    ├── 🖨️ fullcalendar.print.css  # Print-specific styles
+    ├── 🔧 jquery-ui.custom.min.js # jQuery UI components
+    ├── 💫 jquery.min.js           # jQuery library
+    └── ⏰ moment.min.js           # Date/time handling
 ```
 
-## Prerequisites
+---
 
-- **Node.js** (v12 or higher)
-- **MySQL** server running
-- **npm** (comes with Node.js)
+## 🚀 Installation
 
-## Installation
+### Prerequisites
 
-1. **Clone or download the project**:
+Make sure you have the following installed:
+
+- ![Node.js](https://img.shields.io/badge/Node.js-v12+-339933?style=flat-square&logo=nodedotjs&logoColor=white)
+- ![MySQL](https://img.shields.io/badge/MySQL-Server-4479A1?style=flat-square&logo=mysql&logoColor=white)
+- ![npm](https://img.shields.io/badge/npm-Package%20Manager-CB3837?style=flat-square&logo=npm&logoColor=white)
+
+### Quick Start
+
+1. **📥 Clone the repository**
    ```bash
-   cd C:\Users\84389\WebstormProjects\fullcalendar
+   git clone <your-repository-url>
+   cd fullcalendar
    ```
 
-2. **Install dependencies**:
+2. **📦 Install dependencies**
    ```bash
    npm install
    ```
 
-3. **Set up MySQL database**:
-   - Make sure MySQL server is running
-   - The application will automatically create the database and events table on first run
-   - Default database configuration in `db.js`:
-     - Host: localhost
-     - User: root
-     - Password: (empty)
-     - Database: fullcalendar_db
-
-4. **Configure database connection** (if needed):
-   - Edit `db.js` file to modify MySQL connection settings
-
-## Usage
-
-1. **Start the server**:
-   ```bash
-   node server.js
+3. **🗄️ Setup MySQL Database**
+   ```sql
+   CREATE DATABASE calendar_db;
    ```
 
-2. **Open the application**:
-   - Open your web browser
-   - Navigate to: `http://localhost:3000`
-   - Or directly open `index.html` in your browser
+4. **⚙️ Configure Environment**
+   Create a `.env` file in the root directory:
+   ```env
+   DB_HOST=localhost
+   DB_USER=your_username
+   DB_PASSWORD=your_password
+   DB_NAME=calendar_db
+   PORT=3000
+   ```
 
-3. **Using the calendar**:
-   - **View Events**: Switch between month (Tháng), week (Tuần), and day (Ngày) views
-   - **Create Events**: Click on any date or time slot to create a new event
-   - **Edit Events**: Click on existing events to modify them
-   - **Move Events**: Drag and drop events to different dates
-   - **Delete Events**: Use the delete option when editing events
+5. **🚀 Start the application**
+   ```bash
+   # Development mode
+   npm run dev
+   
+   # Production mode
+   npm start
+   ```
 
-## API Endpoints
+6. **🌐 Open in browser**
+   Navigate to `http://localhost:3000`
 
-The server provides REST API endpoints for event management:
+---
 
-- **GET** `/api/events` - Retrieve all events
-- **POST** `/api/events` - Create a new event
-- **PUT** `/api/events/:id` - Update an existing event
-- **DELETE** `/api/events/:id` - Delete an event
+## 📖 Usage
 
-### Event Data Structure
+### 🎯 Basic Operations
 
-```json
-{
-  "id": 1,
-  "title": "Event Title",
-  "start": "2025-09-25T10:00:00",
-  "end": "2025-09-25T12:00:00",
-  "allDay": false,
-  "color": "#3788d8"
-}
+| Action | Method | Description |
+|--------|--------|-------------|
+| **View Events** | Click on calendar | Browse events in month/week/day view |
+| **Create Event** | Click on date/time slot | Add new events with title and timing |
+| **Edit Event** | Click on existing event | Modify event details |
+| **Move Event** | Drag & drop | Change event date/time |
+| **Resize Event** | Drag event edges | Adjust event duration |
+| **Delete Event** | Event context menu | Remove unwanted events |
+
+### 🎨 Interface Features
+
+- **🌏 Vietnamese Localization**: All interface elements in Vietnamese
+- **📱 Responsive Design**: Works seamlessly on desktop, tablet, and mobile
+- **🎨 Modern UI**: Gradient backgrounds and smooth animations
+- **🖱️ Interactive Elements**: Hover effects and visual feedback
+
+---
+
+## 🔌 API Endpoints
+
+### 📊 Events API
+
+| Method | Endpoint | Description | Parameters |
+|--------|----------|-------------|------------|
+| `GET` | `/api/events` | Fetch all events | None |
+| `POST` | `/api/add-event` | Create new event | `title`, `start`, `end`, `allDay` |
+| `POST` | `/api/update-event` | Update existing event | `id`, `title`, `start`, `end`, `allDay` |
+| `DELETE` | `/api/delete-event` | Remove event | `id` |
+
+### 📝 Request Examples
+
+**Create Event:**
+```javascript
+fetch('/api/add-event', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    title: 'Meeting with Team',
+    start: '2025-09-30T10:00:00',
+    end: '2025-09-30T11:00:00',
+    allDay: false
+  })
+});
 ```
 
-## Vietnamese Localization
+**Update Event:**
+```javascript
+fetch('/api/update-event', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    id: 1,
+    title: 'Updated Meeting',
+    start: '2025-09-30T14:00:00',
+    end: '2025-09-30T15:00:00'
+  })
+});
+```
 
-The application includes full Vietnamese language support:
+---
 
-- **Months**: Tháng 1, Tháng 2, ..., Tháng 12
-- **Days**: Chủ nhật, Thứ hai, Thứ ba, Thứ tư, Thứ năm, Thứ sáu, Thứ bảy
-- **Buttons**: Hôm nay (Today), Tháng (Month), Tuần (Week), Ngày (Day)
-- **Short names**: T2, T3, T4, T5, T6, T7, CN
+## 🗄️ Database Schema
 
-## Troubleshooting
+```sql
+CREATE TABLE events (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  start DATETIME NOT NULL,
+  end DATETIME,
+  allDay BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+```
 
-1. **Server won't start**:
-   - Check if MySQL is running
-   - Verify database connection settings in `db.js`
-   - Ensure port 3000 is not in use
+---
 
-2. **Events not loading**:
-   - Check browser console for errors
-   - Verify API endpoints are responding (visit `http://localhost:3000/api/events`)
+## 🛠️ Development
 
-3. **Database connection issues**:
-   - Confirm MySQL credentials in `db.js`
-   - Check if MySQL service is running
-   - Verify database permissions
+### 📝 Available Scripts
 
-## Development
+```bash
+# Start development server with hot reload
+npm run dev
 
-To modify the calendar appearance or functionality:
+# Start production server
+npm start
 
-1. **Frontend changes**: Edit `index.html`
-2. **Server logic**: Modify `server.js`
-3. **Database schema**: Update `db.js`
-4. **Styling**: Customize CSS in the `<style>` section of `index.html`
+# Start with custom environment
+npm run prod
+```
 
-## License
+### 🔧 Development Setup
 
-This project is open source and available under the [MIT License](LICENSE).
+1. **Install dev dependencies**
+   ```bash
+   npm install --dev
+   ```
 
-## Support
+2. **Enable development mode**
+   ```bash
+   npm run dev
+   ```
 
-For issues and questions, please check the troubleshooting section above or refer to the FullCalendar.js documentation at [fullcalendar.io](https://fullcalendar.io/).
+3. **File watching**: Nodemon automatically restarts the server on file changes
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Here's how you can help:
+
+### 🚀 How to Contribute
+
+1. **🍴 Fork the repository**
+2. **🌿 Create a feature branch**
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+3. **💾 Commit your changes**
+   ```bash
+   git commit -m 'Add amazing feature'
+   ```
+4. **📤 Push to the branch**
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+5. **🔄 Open a Pull Request**
+
+### 📋 Development Guidelines
+
+- ✅ Follow existing code style
+- 📝 Add comments for complex logic
+- 🧪 Test your changes thoroughly
+- 📖 Update documentation as needed
+
+---
+
+## 📋 Todo / Roadmap
+
+- [ ] 🔐 User authentication system
+- [ ] 👥 Multi-user event sharing
+- [ ] 🔔 Event notifications
+- [ ] 📱 Mobile app version
+- [ ] 🌐 Multiple language support
+- [ ] 📊 Event analytics dashboard
+- [ ] 🔄 Event synchronization with external calendars
+- [ ] 📎 File attachments for events
+- [ ] 🏷️ Event categories and tags
+- [ ] 🔍 Advanced search functionality
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- **FullCalendar.js** - Amazing calendar library
+- **Express.js** - Fast web framework for Node.js
+- **MySQL** - Reliable database system
+- **jQuery** - Simplifying JavaScript operations
+- **Moment.js** - Date/time manipulation
+
+---
+
+## 📞 Contact & Support
+
+<div align="center">
+
+**Found a bug?** [Open an issue](../../issues)
+**Have a question?** [Start a discussion](../../discussions)
+**Want to contribute?** [Submit a pull request](../../pulls)
+
+---
+
+**⭐ Star this repository if you found it helpful!**
+
+</div>
